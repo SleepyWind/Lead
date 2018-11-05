@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Battle ship</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap3/css/bootstrap.min.css" />
+    <script src="vendor/jquery/jquery-2.0.3.min.js"></script>
+
+    <script src="js/battleship.js"></script>
+    <script src="js/battleship-game.js"></script>
+    <script src="js/battleship-position.js"></script>
+    <script src="js/battleship-cell.js"></script>
+    <script src="js/battleship-shipsinfo.js"></script>
+    <script src="js/battleship-shotstatus.js"></script>
+    <script src="js/battleship-field.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <div class="game">
+        <div class="header">
+            <span class="user_info">User name: </span>
+        </div>
+        <div class="arena_container">
+            <div class="game_status"></div>
+            <div class="bot">
+                <p>Bot field</p>
+            </div>
+            <div class="human">
+                <p>User field</p>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <h1>Hello!</h1>
+        <p>This is Battle Ship Game. Set your name. Play.</p>
+        <form>
+            <input type="text" class="username"/>
+            <button type="text" class="btn btn-large btn-primary username_btn">Play</button>
+        </form>
+    </div>
+</div>
+<div class="footer">
+    (с) Battle Ship
+</div>
+
+<script>
+jQuery(function($) {
+
+    init();
+
+    var game = new BattleShip.Game( $('.human'), $('.bot'), $('.game_status'), 10, 10 );
+    game.start();
+
+    function init() {
+        $('.game').hide();
+        $('.username').focus();
+
+        $('.username_btn').on('click', function(e) {
+            onUserName();
+            e.preventDefault();
+        });
+
+        $('.username').on('keydown', function(e) {
+            if (e.keyCode == 13) {
+                onUserName();
+                e.preventDefault();
+            }
+        });
+
+        function onUserName() {
+            var userName = $('.username').val();
+
+            if ( !$('.username').val() ) {
+                alert("Введите имя!");
+                return;
+            }
+            
+            $('.user_info').append( userName );
+            $('.jumbotron').hide(500);
+            $('.game').show(500);
+        }
+    }
+});
+</script>
+</body>
+</html>
